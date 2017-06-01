@@ -1,6 +1,5 @@
 # node-blog-demo
 Simple blog based on Node.js
 
-# reference
-
+## reference
 [N-blog](https://github.com/nswbmw/N-blog)

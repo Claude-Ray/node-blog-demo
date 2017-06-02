@@ -30,6 +30,21 @@ a:hover {
   text-align: center;
 }
 
+.nav h1 {
+  color: #4fc08d;
+  display: inline-block;
+  margin: 10px 0;
+}
+
+/* nav-setting */
+
+.nav-setting {
+  position: fixed;
+  right: 30px;
+  top: 35px;
+  z-index: 999;
+}
+
 .nav-setting .icon.bars {
   color: #000;
   font-size: 18px;

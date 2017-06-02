@@ -8,11 +8,11 @@ const checkLogin = require('../middlewares/check').checkLogin;
 // GET /posts display all blogs (all users / one author)
 // eg: GET /posts?author=xxx
 router.get('/', (req, res, next) => {
-  res.send(req.flash());
+  res.render('posts');
 });
 
 // POST /posts post action
-router.get('/', (req, res, next) => {
+router.get('/', checkLogin, (req, res, next) => {
   res.send(req.flash());
 });
 

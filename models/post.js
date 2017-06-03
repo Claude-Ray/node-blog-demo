@@ -73,9 +73,9 @@ module.exports = {
   },
 
   // delete post
-  delPostById: function delPostById(postId,author) {
+  delPostById: function delPostById(postId, author) {
     return Post
-      .remove({author,_id:postId})
+      .remove({author, _id: postId})
       .exec();
   },
 };

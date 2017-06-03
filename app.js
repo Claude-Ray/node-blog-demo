@@ -17,6 +17,7 @@ app.set('view engine', 'ejs');
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
+
 // session
 app.use(session({
   name             : config.session.key,
@@ -36,7 +37,7 @@ app.use(flash());
 
 // file upload
 app.use(require('express-formidable')({
-  uploadDir: path.join(__dirname,'public/img')
+  uploadDir: path.join(__dirname, 'public/img')
 }));
 
 // express 自动 merge 并传入了模板，因此可以在模板中直接使用这些变量
@@ -56,6 +57,13 @@ app.use((req, res, next) => {
 
 // routes
 routes(app);
+
+// error page
+app.use((err, req, res, next) => {
+  res.render('error', {
+    error: err,
+  });
+});
 
 // start
 app.listen(config.port, () => {

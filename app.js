@@ -8,6 +8,8 @@ const flash = require('connect-flash');
 const config = require('config-lite')(__dirname);
 const routes = require('./routes');
 const pkg = require('./package');
+const winston = require('winston');
+const expressWinston = require('express-winston');
 
 let app = express();
 
@@ -55,8 +57,35 @@ app.use((req, res, next) => {
   next();
 });
 
+// formal logs
+app.use(expressWinston.logger({
+  transports: [
+    new (winston.transports.Console)({
+      json    : true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'log/success.log'
+    })
+  ]
+}));
+
+// log -> routes ->errorLog
 // routes
 routes(app);
+
+// error logs
+app.use(expressWinston.errorLogger({
+  transports: [
+    new (winston.transports.Console)({
+      json    : true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'log/error.log'
+    })
+  ]
+}));
 
 // error page
 app.use((err, req, res, next) => {

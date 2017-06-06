@@ -106,7 +106,7 @@ router.get('/:postId/edit', checkLogin, (req, res, next) => {
 });
 
 // POST /posts/:postId/edit
-router.post('/postId/edit', checkLogin, (req, res, next) => {
+router.post('/:postId/edit', checkLogin, (req, res, next) => {
   let postId = req.params.postId;
   let author = req.session.user._id;
   let title = req.fields.title;
@@ -122,25 +122,26 @@ router.post('/postId/edit', checkLogin, (req, res, next) => {
 });
 
 // GET /posts/:postId/remove
-router.get('/postId/remove', checkLogin, (req, res, next) => {
+router.get('/:postId/remove', checkLogin, (req, res, next) => {
   let postId = req.params.postId;
   let author = req.session.user._id;
 
   PostModel.delPostById(postId, author)
     .then(() => {
       req.flash('success', '文章删除成功');
+      // redirect to homepage
       res.redirect('/posts');
     })
     .catch(next);
 });
 
 // POST /posts/:postId/comment
-router.post('/postId/comment', checkLogin, (req, res, next) => {
+router.post('/:postId/comment', checkLogin, (req, res, next) => {
   res.send(req.flash());
 });
 
 // GET /posts/:postId/comment/remove
-router.get('/postId/comment/remove', checkLogin, (req, res, next) => {
+router.get('/:postId/comment/remove', checkLogin, (req, res, next) => {
   res.send(req.flash());
 });
 

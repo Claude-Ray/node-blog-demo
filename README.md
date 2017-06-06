@@ -7,4 +7,4 @@ Simple blog based on Node.js
 - Express 4.15.3
 
 ## reference
-[N-blog](https://github.com/nswbmw/N-blog)
+- [N-blog](https://github.com/nswbmw/N-blog)

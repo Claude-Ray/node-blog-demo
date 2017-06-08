@@ -30,7 +30,18 @@ module.exports = {
   },
 
   // get comments by postId
-  
-  // get comments' count by postId
+  getComments: function getComments(postId) {
+    return Comment
+      .find({postId: postId})
+      .populate({path: 'author', model: 'User'})
+      .sort({_id: 1})
+      .addCreateAt()
+      .contentToHtml()
+      .exec();
+  },
 
+  // get comments' count by postId
+  getCommentsCount: function getCommentsCount(postId) {
+    return Comment.count({postId: postId}).exec();
+  },
 };

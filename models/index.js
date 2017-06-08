@@ -47,11 +47,11 @@ exports.Post = mongolass.model('Post', {
 exports.Post.index({author: 1, _id: -1}).exec();
 
 // comment model
-exports.Comment = mongolass.model(('Comment', {
+exports.Comment = mongolass.model('Comment', {
   author : {type: Mongolass.Types.ObjectId},
   content: {type: 'string'},
   postId : {type: Mongolass.Types.ObjectId},
-}));
+});
 // find comments by postId, time desc
 exports.Comment.index({postId: 1, _id: 1}).exec();
 // find comments by authorId for delete

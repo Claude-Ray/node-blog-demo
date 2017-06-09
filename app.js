@@ -94,7 +94,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-// start
-app.listen(config.port, () => {
-  console.log(`${pkg.name} listening on port ${config.port}`);
-});
+if (module.parent) {
+  // test
+  module.exports = app;
+} else {
+  // start
+  app.listen(config.port, () => {
+    console.log(`${pkg.name} listening on port ${config.port}`);
+  });
+}

@@ -29,7 +29,7 @@ router.post('/', checkNotLogin, (req, res, next) => {
       throw new Error('名字长度请限制为1-10个字符');
     }
     if (['male', 'female', 'privacy'].indexOf(gender) === -1) {
-      throw new Error('性别选择不对');
+      throw new Error('性别只能是male，female或privacy');
     }
     if (bio.length < 1 || bio.length > 30) {
       throw new Error('签名请限制为1-30个字符');

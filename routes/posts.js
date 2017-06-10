@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const PostModel = require('../models/post');
-const CommentModel = require('../models/comments');
+const CommentModel = require('../models/comment');
 const checkLogin = require('../middlewares/check').checkLogin;
 
 // GET /posts display all blogs (all users / one author)
@@ -55,7 +55,7 @@ router.post('/', checkLogin, (req, res, next) => {
   PostModel.create(post)
     .then((result) => {
       // get post (includes _id) from mongodb
-      post = result.opt[0];
+      post = result.ops[0];
       req.flash('success', '发表成功');
       // redirect to this post's page
       res.redirect(`/posts/${post._id}`);
@@ -170,6 +170,46 @@ router.get('/:postId/comment/:commentId/remove', checkLogin, (req, res, next) =>
       req.flash('success', '删除留言成功');
       // redirect back
       res.redirect('back');
+    })
+    .catch(next);
+});
+
+// GET /posts/:postId/comment/:commentId/edit
+router.get('/:postId/comment/:commentId/edit', checkLogin, (req, res, next) => {
+  let postId = req.params.postId;
+  let commentId = req.params.commentId;
+  let authorId = req.session.user._id;
+  CommentModel.getRawCommentById(commentId)
+    .then((comment) => {
+      if (!comment) {
+        throw new Error('该留言不存在');
+      }
+      if (postId.toString() !== comment.postId.toString()) {
+        throw new Error('该留言不在此文章下');
+      }
+      if (authorId.toString() !== comment.author._id.toString()) {
+        throw new Error('权限不足');
+      }
+      res.render('comment-edit', {
+        comment: comment
+      });
+    })
+    .catch(next);
+
+});
+
+// POST /posts/:postId/comment/:commentId/edit
+router.post('/:postId/comment/:commentId/edit', checkLogin, (req, res, next) => {
+  let postId = req.params.postId;
+  let commentId = req.params.commentId;
+  let author = req.session.user._id;
+  let content = req.fields.content;
+
+  CommentModel.updateCommentById(commentId, author, {content: content})
+    .then(() => {
+      req.flash('success', '留言编辑成功');
+      // redirect back
+      res.redirect(`/posts/${postId}`);
     })
     .catch(next);
 });

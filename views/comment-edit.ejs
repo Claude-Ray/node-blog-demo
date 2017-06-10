@@ -11,16 +11,12 @@
   </div>
 
   <div class="eight wide column">
-    <form class="ui form segment" method="post" action="/posts/<%= post._id %>/edit">
+    <form class="ui form segment" method="post" action="/posts/<%= comment.postId %>/comment/<%= comment._id %>/edit">
       <div class="field required">
-        <label>标题</label>
-        <input type="text" name="title" value="<%= post.title %>">
+        <label>留言</label>
+        <textarea name="content" rows="15"><%= comment.content %></textarea>
       </div>
-      <div class="field required">
-        <label>内容</label>
-        <textarea name="content" rows="15"><%= post.content %></textarea>
-      </div>
-      <input type="submit" class="ui button" value="发布">
+      <input type="submit" class="ui icon button" value="发布">
     </form>
   </div>
 </div>

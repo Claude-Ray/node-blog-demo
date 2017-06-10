@@ -1,7 +1,7 @@
 'use strict';
 
 const marked = require('marked');
-const CommentModel = require('./comments');
+const CommentModel = require('./comment');
 const Post = require('./index').Post;
 
 // add comments count
